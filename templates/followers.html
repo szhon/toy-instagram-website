@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>insta485</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container pt-3" style="max-width: 800px;">
+        <div class="row align-items-center">
+            <a href="{{ url_for('show_index') }}" class="col">
+                <img src="{{ url_for('static',filename='images/logo.png') }}" width="200" alt="insta485logo">
+            </a>
+            <div class="col text-right">
+                <a href="{{ url_for('show_explore') }}">explore</a>
+                |
+                <a href="{{ url_for('show_user', user_url_slug=logname) }}">{{ logname }}</a>
+            </div>
+        </div>
+        <hr>
+        <div class = "container px-5">
+            <h2 class = "pt-5">Followers</h2>
+            {% for follower in followers %}
+            <div class = "border border-secondary mt-4 rounded-lg">
+                <div class="row p-3 py-2  align-items-center">
+                    <div class="col">
+                        <a href="{{ url_for('show_user', user_url_slug=follower.username) }}" class="align-items-center">
+                            <img src="{{ url_for('download_file', filename=follower.user_img_url) }}" width="40" alt="{{ follower.username }}}">
+                            <span>{{ follower.username }}</span>
+                        </a>
+                    </div>
+                    <div class="col text-right">
+                        {% if follower.username != logname %}
+                        {% if follower.logname_follows_username == logname %}
+                        <div class="row float-right">
+                            <div class="col-auto">following</div>
+                            <div class="col-auto">
+                                <form action="{{ url_for('exe_following_post', target=url_for('show_user_follower', user_url_slug=logname)) }}" method="post" enctype="multipart/form-data">
+                                  <input type="submit" name="unfollow" value="unfollow"/>
+                                  <input type="hidden" name="username" value="{{ follower.username }}"/>
+                                  <input type="hidden" name="operation" value="unfollow"/>
+                                </form>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="row float-right">
+                            <div class="col-auto">not following</div>
+                            <div class="col-auto">
+                                <form action="{{ url_for('exe_following_post', target=url_for('show_user_follower', user_url_slug=logname)) }}" method="post" enctype="multipart/form-data">
+                                  <input type="submit" name="follow" value="follow"/>
+                                  <input type="hidden" name="username" value="{{ follower.username }}"/>
+                                  <input type="hidden" name="operation" value="follow"/>
+                                </form>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

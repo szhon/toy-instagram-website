@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>insta485</title>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container pt-3" style="max-width: 800px;">
+        <div class="row align-items-center">
+            <a href="{{url_for('show_index')}}" class="col">
+                <img src="{{ url_for('static',filename='images/logo.png') }}" width="200" alt="insta485logo">
+            </a>
+            <div class="col text-right">
+                <a href="{{ url_for('show_login')}}">login</a>
+            </div>
+        </div>
+        <hr>
+        <!-- DO NOT CHANGE THIS (aside from styling) -->
+        <div class = "container p-5">
+            <form action="{{url_for('exe_acc_post', target=url_for('show_index'))}}" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <input type="text" name="username" placeholder="username" required/>
+                </div>
+                <div class="form-group">
+                     <input type="password" name="password" placeholder="password" required/>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="login"/>
+                </div>
+                <input type="hidden" name="operation" value="login"/>
+            </form>
+            <div>
+                Don't have an account? <a href="{{ url_for('show_create')}}">Sign up</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
